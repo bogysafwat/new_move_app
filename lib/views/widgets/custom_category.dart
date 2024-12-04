@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:new_move_app/views/pages/movie_description.dart';
+import 'package:new_move_app/views/pages/see_more_page.dart';
 
 import '../../models/movie.dart';
 
-Widget buildCategory(String title, List<Movie> movies) {
+Widget buildCategory(String title, List<Movie> movies, BuildContext context,) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 10.0),
     child: Column(
@@ -18,7 +20,14 @@ Widget buildCategory(String title, List<Movie> movies) {
               ),
                  Expanded(child: SizedBox()),
                  GestureDetector(
-                   onTap: (){},
+                   onTap: (){
+                     Navigator.push(
+                        context,
+                         MaterialPageRoute(
+                           builder: (context) =>
+                              SeeMorePage(Catmovies: movies,)
+                         ));
+                   },
                    child: Text(
                      'See More',
                       style: TextStyle(color:Colors.white ,fontSize: 15, fontWeight: FontWeight.bold),),
@@ -42,14 +51,26 @@ Widget buildCategory(String title, List<Movie> movies) {
                   child: Column(
                     children: [
                       movie.posterPath != null
-                          ? ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/w200${movie.posterPath}',
-                          height: 200,
-                          fit: BoxFit.cover,
-                        ),
-                      )
+                          ? GestureDetector(
+                            child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(8.0),
+                                                    child: Image.network(
+                            'https://image.tmdb.org/t/p/w200${movie.posterPath}',
+                            height: 200,
+                            fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+
+                           onTap:(){
+                             Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                     builder: (context) =>
+                                        MovieDescription(movie: movie,)
+                                 ));
+
+                           } ,
+                          )
                           : Container(
                         width: 100,
                         height: 150,

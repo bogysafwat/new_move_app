@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:new_move_app/views/pages/movie_description.dart';
 
 import '../../models/movie.dart';
 
@@ -13,9 +14,16 @@ Widget buildTrendingCarousel(List<Movie> trendingMovies) {
         final movie = trendingMovies[index];
 
         return GestureDetector(
-          onTap: () {
-            // Handle movie tap here (e.g., navigate to movie details)
-            print('Tapped on: ${movie.title}');
+
+            onTap:(){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MovieDescription(movie: movie,)
+                  ));
+
+
           },
           child: Stack(
             children: [

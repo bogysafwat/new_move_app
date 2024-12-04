@@ -62,9 +62,9 @@ class HomePage extends StatelessWidget {
                   CategoryButton((){}, 'Romance')
                 ]
               ),
-              buildCategory('Popular Movies', movieProvider.popularMovies),
-              buildCategory('Top Rated Movies', movieProvider.topRatedMovies),
-              buildCategory('Trending Movies', movieProvider.trendingMovies),
+              buildCategory('Popular Movies', movieProvider.popularMovies,context),
+              buildCategory('Top Rated Movies', movieProvider.topRatedMovies,context),
+              buildCategory('Trending Movies', movieProvider.trendingMovies,context),
 
             ],
           ),

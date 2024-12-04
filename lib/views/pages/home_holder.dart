@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:new_move_app/models/movie.dart';
 import 'package:new_move_app/views/pages/download_page.dart';
 import 'package:new_move_app/views/pages/home_page.dart';
 
@@ -17,6 +18,7 @@ class HomeHolder extends StatefulWidget {
 
 class _HomeHolderState extends State<HomeHolder> {
   int _selectedIndex =0;
+
   final _pages=[HomePage(),SearchPage(),SavedPage(),DownloadPage(),MePage()];
   @override
   Widget build(BuildContext context) {
@@ -47,4 +49,6 @@ class _HomeHolderState extends State<HomeHolder> {
       ),
     );
   }
+
+
 }

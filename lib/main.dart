@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_move_app/providers/downloaded_provider.dart';
 import 'package:new_move_app/providers/movie_provider.dart';
 import 'package:new_move_app/views/pages/home_holder.dart';
 import 'package:new_move_app/views/pages/home_page.dart';
@@ -9,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MovieProvider()),
+        ChangeNotifierProvider(create: (_) => DownloadedProvider()),
       ],
       child: MyApp(),
     ),
