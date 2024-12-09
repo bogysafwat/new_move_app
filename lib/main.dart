@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_move_app/providers/downloaded_provider.dart';
 import 'package:new_move_app/providers/movie_provider.dart';
+import 'package:new_move_app/providers/saved_provider.dart';
 import 'package:new_move_app/views/pages/home_holder.dart';
 import 'package:new_move_app/views/pages/home_page.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => MovieProvider()),
         ChangeNotifierProvider(create: (_) => DownloadedProvider()),
+        ChangeNotifierProvider(create: (_) => SavedProvider()),
       ],
       child: MyApp(),
     ),

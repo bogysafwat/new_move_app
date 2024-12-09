@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:new_move_app/providers/saved_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../models/movie.dart';
 import '../../providers/downloaded_provider.dart';
+import '../../providers/movie_provider.dart';
+import '../widgets/build_descripition_button.dart';
 
-class MovieDescription extends StatelessWidget {
+class MovieDescription extends StatefulWidget {
   const MovieDescription({super.key, required this.movie});
   final Movie movie;
+
+  @override
+  State<MovieDescription> createState() => _MovieDescriptionState();
+}
+
+class _MovieDescriptionState extends State<MovieDescription> {
+  void initState() {
+    super.initState();
+    final movieProvider = Provider.of<MovieProvider>(context, listen: false);
+    movieProvider.fetchSimilarMovies(widget.movie.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     final dp=Provider.of<DownloadedProvider>(context);
+    final sd = Provider.of<SavedProvider>(context);
     return Scaffold(
         backgroundColor: const Color(0xFF070420),
         extendBodyBehindAppBar: true,
@@ -38,7 +54,12 @@ class MovieDescription extends StatelessWidget {
             actions: [
               GestureDetector(
                 onTap: () {
-
+                sd.add(widget.movie);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Movie Saved !'),
+                      ),
+                    );
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -82,7 +103,7 @@ class MovieDescription extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.network(
-                        'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                        'https://image.tmdb.org/t/p/w500${widget.movie.posterPath}',
                         height: 500,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -109,25 +130,10 @@ class MovieDescription extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20,),
-              Center(child: Text(movie.title,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)),
+              Center(child: Text(widget.movie.title,style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),)),
               SizedBox(height: 5,),
-              Center(child: Text(movie.releaseDate.substring(0,4),style: TextStyle(fontSize: 18,color: Colors.white),)),
+              Center(child: Text(widget.movie.releaseDate.substring(0,4),style: TextStyle(fontSize: 18,color: Colors.white),)),
               SizedBox(height: 5,),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ReadMoreText(
-                  '${movie.description}',
-                  style:TextStyle(color: Colors.white,fontSize: 12) ,
-                  trimMode: TrimMode.Line,
-                  trimLines:1 ,
-                  colorClickableText: Colors.white,
-                  trimCollapsedText: 'Read More',
-                  trimExpandedText: 'Read less',
-                  moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white),
-                  lessStyle:TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white) ,
-                ),
-              ),
-              SizedBox(height: 7,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(children: [
@@ -141,7 +147,7 @@ class MovieDescription extends StatelessWidget {
                         color: Colors.white, // Icon color
                       ),
                       label: const Text(
-                        'Watch Now',
+                        'Play',
                         style: TextStyle(color: Colors.white),
                       ),
                       style: ButtonStyle(
@@ -161,7 +167,12 @@ class MovieDescription extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        dp.add(movie);
+                        dp.add(widget.movie);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Movie downloaded !'),
+                          ),
+                        );
                       },
                       icon: const Icon(
                         Icons.download_rounded, // Replace with your desired icon
@@ -181,11 +192,31 @@ class MovieDescription extends StatelessWidget {
 
                       ),
                     ),
+
                   )
+
                 ],),
               ),
 
-
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ReadMoreText(
+                  '${widget.movie.description}',
+                  style:TextStyle(color: Colors.white,fontSize: 12) ,
+                  trimMode: TrimMode.Line,
+                  trimLines:1 ,
+                  colorClickableText: Colors.white,
+                  trimCollapsedText: 'Read More',
+                  trimExpandedText: 'Read less',
+                  moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white),
+                  lessStyle:TextStyle(fontSize: 14, fontWeight: FontWeight.bold,color: Colors.white) ,
+                ),
+              ),
+              SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(child: BuildDescripitionButton(movieId:widget.movie.id,movie: widget.movie,))
+              )
             ],
           ),
         ) ,

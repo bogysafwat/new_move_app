@@ -9,7 +9,7 @@ class DownlodedMovieCard extends StatelessWidget {
   final Movie movie;
   @override
   Widget build(BuildContext context) {
-    final dp=Provider.of<DownloadedProvider>(context);
+
 
     return Container(
       margin: EdgeInsets.all(10),

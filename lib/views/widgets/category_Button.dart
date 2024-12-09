@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
-Widget CategoryButton(final onPrssed,lable){
+import '../../utils/strings.dart';
+import '../pages/genre_page.dart';
+
+Widget CategoryButton(final onPrssed,lable,BuildContext context,genreId){
   return ElevatedButton(
-    onPressed: onPrssed,
+    onPressed: (){
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+              GenrePage(genreTitl: lable,genreId:genreId )
+          ));
+    },
     child: Text(
       '$lable',
       style: TextStyle(color: Colors.white),

@@ -5,7 +5,9 @@ class DownloadedProvider extends ChangeNotifier {
   List<Movie> downloadedMovie=[];
 
   void add(Movie movie){
-    downloadedMovie.add(movie);
+    if(downloadedMovie.contains(movie)){
+
+    }else{downloadedMovie.add(movie);}
     notifyListeners();
   }
 
