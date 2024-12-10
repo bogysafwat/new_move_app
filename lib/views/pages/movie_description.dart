@@ -21,6 +21,7 @@ class _MovieDescriptionState extends State<MovieDescription> {
     super.initState();
     final movieProvider = Provider.of<MovieProvider>(context, listen: false);
     movieProvider.fetchSimilarMovies(widget.movie.id);
+
   }
 
   @override

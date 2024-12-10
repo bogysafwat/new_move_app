@@ -14,18 +14,41 @@ class SavedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dp=Provider.of<SavedProvider>(context);
+    final sp=Provider.of<SavedProvider>(context);
 
     return Scaffold(
         backgroundColor: const Color(0xFF070420),
         appBar: AppBar(backgroundColor:Color(0xFF070420) ,
           title: Text('Saved',style: TextStyle(color: Colors.white),),
           centerTitle: true,
+          actions: [
+            ElevatedButton(
+              onPressed: (){
+              sp.savedMovie.clear();
+              },
+              child: Text(
+                "Delete",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                elevation: MaterialStateProperty.all<double>(0),
+              ),
+            ),
+          ],
         ),
         body: ListView.builder(
-            itemCount: dp.savedMovie.length,
+            itemCount: sp.savedMovie.length,
             itemBuilder: (context,index){
-              return SavedMovieCard(movie: dp.savedMovie[index]);
+              return SavedMovieCard(movie: sp.savedMovie[index]);
 
             }));
 

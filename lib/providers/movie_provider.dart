@@ -93,4 +93,24 @@ class MovieProvider with ChangeNotifier {
       print('Error fetching similar movies for movie $movieId: $e');
     }
   }
+
+  List<Movie> searchResults = [];
+  bool isSearching = false;
+  String? searchError;
+
+  // Search for movies
+  Future<void> searchMovies(String query) async {
+    isSearching = true;
+    searchError = null;
+    notifyListeners();
+
+    try {
+      searchResults = await _movieService.searchMovies(query);
+    } catch (e) {
+      searchError = 'Failed to search for movies. Please try again.';
+    } finally {
+      isSearching = false;
+      notifyListeners();
+    }
+  }
 }

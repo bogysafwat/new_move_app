@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_move_app/models/movie.dart';
+import 'package:new_move_app/views/pages/movie_description.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/downloaded_provider.dart';
@@ -16,7 +17,14 @@ class MovieCard extends StatelessWidget {
       child: Stack(
         children: [
           GestureDetector(
-            onTap: (){},
+            onTap: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                         MovieDescription(movie: movie)
+                  ));
+            },
             child: Container(
               height: 200,
               width: double.infinity,
@@ -72,6 +80,10 @@ class MovieCard extends StatelessWidget {
                        ElevatedButton(
                          onPressed: (){
                            dp.add(movie);
+                           ScaffoldMessenger.of(context).showSnackBar(
+                               const SnackBar(
+                                 content: Text('Movie downloaded !'),
+                               ));
                          },
                            child: Text(
                             'Download',

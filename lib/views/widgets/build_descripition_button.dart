@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_move_app/views/widgets/description_button.dart';
+import 'package:new_move_app/views/widgets/movie_tralier_card.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/movie.dart';
@@ -9,7 +10,9 @@ import '../pages/movie_description.dart';
 
 class BuildDescripitionButton extends StatefulWidget {
   final int movieId;
-  final Movie movie ;// Pass the movieId here
+  final Movie movie ;
+
+
 
   BuildDescripitionButton({required this.movie, required this.movieId}); // Add constructor to accept movieId
 
@@ -22,6 +25,8 @@ class _BuildDescripitionButtonState extends State<BuildDescripitionButton> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,13 +71,11 @@ class _BuildDescripitionButtonState extends State<BuildDescripitionButton> {
 
   Widget _buildContent(int movieId) {
     final movieProvider = Provider.of<MovieProvider>(context);
+    final trailerUrl =Uri.parse(movieProvider.movieTrailers[widget.movie.id]!) ;
 
     switch (_selectedIndex) {
       case 0:
-        return const Text(
-          'Episode Content',
-          style: TextStyle(color: Colors.white, fontSize: 18),
-        );
+        return MovieTralierCard(movie:widget.movie,url:trailerUrl,);
       case 1:
       // Check if similar movies exist for the movieId
         if (movieProvider.similarMovies.containsKey(movieId)) {

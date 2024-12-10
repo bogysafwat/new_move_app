@@ -158,4 +158,33 @@ class MovieService {
       throw Exception('Failed to fetch similar movies');
     }
   }
+
+
+  // Fetch movies by search query
+  Future<List<Movie>> searchMovies(String query, {int page = 1}) async {
+    try {
+      final response = await _dio.get(
+        '/search/movie',
+        queryParameters: {
+          'api_key': _apiKey,
+          'language': _language,
+          'query': query,
+          'page': page,
+          'include_adult': false, // Avoid adult content unless needed
+        },
+      );
+
+      final List<dynamic>? results = response.data['results'];
+      if (results == null) {
+        throw Exception('No movies found for the search query: $query');
+      }
+
+      return results.map((movieJson) => Movie.fromJson(movieJson)).toList();
+    } catch (e) {
+      print('Error searching movies with query "$query": $e');
+      throw Exception('Failed to search movies');
+    }
+  }
+
+
 }
